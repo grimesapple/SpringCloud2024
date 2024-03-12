@@ -4,6 +4,7 @@ import com.rye.study.cloud.entities.PayDto;
 import com.rye.study.cloud.reps.ResultData;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class OrderController {
 
-//    public static final String PAYMENT_SRV_URL = "http://localhost:8001";
+    //    public static final String PAYMENT_SRV_URL = "http://localhost:8001";
     public static final String PAYMENT_SRV_URL = "http://cloud-payment-service";
 
     @Resource
@@ -35,7 +36,13 @@ public class OrderController {
 
     @GetMapping("consumer/pay/get/{id}")
     public ResultData<String> get(@PathVariable("id") String id) {
-        return restTemplate.getForObject(PAYMENT_SRV_URL + "/pay/getById/"+id, ResultData.class,id);
+        return restTemplate.getForObject(PAYMENT_SRV_URL + "/pay/getById/" + id, ResultData.class, id);
     }
+
+    @GetMapping(value = "/consumer/get/info")
+    public String getInfoByConsul() {
+        return restTemplate.getForObject(PAYMENT_SRV_URL + "/pay/get/info", String.class);
+    }
+
 
 }
